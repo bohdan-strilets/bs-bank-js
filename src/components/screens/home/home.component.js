@@ -2,6 +2,8 @@ import { $BS } from '@/core/bsquery/bsquery.lib'
 import { BaseScreen } from '@/core/component/base-screen.component'
 import renderService from '@/core/services/render.service'
 
+import { Button } from '@/components/ui/button/button.component'
+
 import styles from './home.module.scss'
 import template from './home.template.html'
 
@@ -11,7 +13,17 @@ export class Home extends BaseScreen {
 	}
 
 	render() {
-		const element = renderService.htmlToElement(template, [], styles)
+		const element = renderService.htmlToElement(
+			template,
+			[
+				new Button({
+					children: 'send',
+					onClick: () => alert('Hello'),
+					variant: 'green'
+				})
+			],
+			styles
+		)
 		$BS(element).find('h1').css('color', 'blue')
 		return element
 	}
