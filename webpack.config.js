@@ -18,13 +18,13 @@ const plugins = [
 		template: 'index.html',
 		minify: {
 			collapseWhitespace: !isDev,
-			removeComments: !isDev,
-		},
+			removeComments: !isDev
+		}
 	}),
 	new MiniCssExtractPlugin({
 		filename: isDev ? '[name].css' : '[name].[contenthash].css',
-		chunkFilename: isDev ? '[id].css' : '[id].[contenthash].css',
-	}),
+		chunkFilename: isDev ? '[id].css' : '[id].[contenthash].css'
+	})
 ]
 
 module.exports = {
@@ -34,22 +34,22 @@ module.exports = {
 	output: {
 		filename: isDev ? '[name].js' : '[name].[contenthash].js',
 		path: path.resolve(__dirname, 'dist'),
-		assetModuleFilename: 'public/[name].[contenthash][ext][query]',
+		assetModuleFilename: 'public/[name].[contenthash][ext][query]'
 	},
 	resolve: {
 		extensions: ['.js'],
 		alias: {
-			'@': path.resolve(__dirname, 'src/'),
-		},
+			'@': path.resolve(__dirname, 'src/')
+		}
 	},
 	devtool: isDev ? 'source-map' : false,
 	devServer: {
 		port: 3003,
 		hot: true,
 		static: {
-			directory: path.join(__dirname, 'public'),
+			directory: path.join(__dirname, 'public')
 		},
-		historyApiFallback: true,
+		historyApiFallback: true
 	},
 	optimization: {
 		minimize: !isDev,
@@ -59,18 +59,18 @@ module.exports = {
 				parallel: true,
 				terserOptions: {
 					format: {
-						comments: false,
-					},
-				},
-			}),
-		],
+						comments: false
+					}
+				}
+			})
+		]
 	},
 	plugins,
 	module: {
 		rules: [
 			{
 				test: /\.html$/i,
-				loader: 'html-loader',
+				loader: 'html-loader'
 			},
 			{
 				test: /\.js$/,
@@ -78,9 +78,9 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						presets: ['@babel/preset-env'],
-					},
-				},
+						presets: ['@babel/preset-env']
+					}
+				}
 			},
 			{
 				test: /\.module\.s[ac]ss$/i,
@@ -90,17 +90,17 @@ module.exports = {
 						loader: 'css-loader',
 						options: {
 							modules: {
-								localIdentName: '[local]_[hash:base64:7]',
-							},
-						},
+								localIdentName: '[local]_[hash:base64:7]'
+							}
+						}
 					},
 					{
 						loader: 'sass-loader',
 						options: {
-							sourceMap: true,
-						},
-					},
-				],
+							sourceMap: true
+						}
+					}
+				]
 			},
 			{
 				test: /^((?!\.module).)*s[ac]ss$/i,
@@ -110,10 +110,10 @@ module.exports = {
 					{
 						loader: 'sass-loader',
 						options: {
-							sourceMap: true,
-						},
-					},
-				],
+							sourceMap: true
+						}
+					}
+				]
 			},
 			{
 				test: /\.css$/i,
@@ -123,14 +123,14 @@ module.exports = {
 					{
 						loader: 'postcss-loader',
 						options: {
-							sourceMap: true,
-						},
-					},
-				],
+							sourceMap: true
+						}
+					}
+				]
 			},
 			{
 				test: /\.(png|svg|jpg|jpeg|gif)$/i,
-				type: 'asset/resource',
+				type: 'asset/resource'
 			},
 			{
 				test: /\.m?js$/,
@@ -138,10 +138,10 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						presets: ['@babel/preset-env'],
-					},
-				},
-			},
-		],
-	},
+						presets: ['@babel/preset-env']
+					}
+				}
+			}
+		]
+	}
 }
