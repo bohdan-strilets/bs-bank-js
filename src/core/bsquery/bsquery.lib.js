@@ -7,10 +7,9 @@ class BSQuery {
 	 * Create  a new BSQuery instance.
 	 * @param {string|HTMLElement} selector - A CSS selector string or an HTMLElement.
 	 */
-
 	constructor(selector) {
 		if (typeof selector === 'string') {
-			this.element = document.querySelectorAll(selector)
+			this.element = document.querySelector(selector)
 			if (!this.element) {
 				throw new Error(`Element ${selector} not found!`)
 			}
@@ -26,7 +25,6 @@ class BSQuery {
 	 * @param {string} selector - A CSS selector string to search for within the selected element.
 	 * @returns {BSQuery} A new BSQuery instance for the found element.
 	 */
-
 	find(selector) {
 		const element = new BSQuery(this.element.querySelector(selector))
 		if (element) {
@@ -37,12 +35,54 @@ class BSQuery {
 	}
 
 	/**
+	 * Append a new element as a child of the selected element.
+	 * @param {HTMLElement} childElement - The new child element to append.
+	 * @returns {BSQuery} The current BSQuery instance for chaining.
+	 */
+	append(childElement) {
+		this.element.appendChild(childElement)
+		return this
+	}
+
+	/**
+	 * Insert a new element before the selected element.
+	 * @param {HTMLElement} newElement - The new element to insert before the selected element.
+	 * @returns {BSQuery} The current BSQuery instance for chaining.
+	 */
+	before(newElement) {
+		if (!(newElement instanceof HTMLElement)) {
+			throw new Error('Element must be an HTMLElement.')
+		}
+
+		const parentElement = this.element.parentElement
+
+		if (parentElement) {
+			parentElement.insertBefore(newElement, this.element)
+			return this
+		} else {
+			throw new Error('Element does not have a parent element.')
+		}
+	}
+	/**
+	 * Get or set the inner HTML of the selected element.
+	 * @param {string} [htmlContent] - Optional HTML content to set. If not provided, the current inner HTML will be returned.
+	 * @returns {BSQuery|string} The current BSQuery instance for chaining when setting HTML content, or the current inner HTML when getting.
+	 */
+	html(htmlContent) {
+		if (typeof htmlContent === 'undefined') {
+			return this.element.innerHTML
+		} else {
+			this.element.innerHTML = htmlContent
+			return this
+		}
+	}
+
+	/**
 	 * Set the CSS style of the selected element.
 	 * @param {string} property - The CSS property to set.
 	 * @param {string} value - The value to set for the CSS property.
 	 * @returns {BSQuery} The current BSQuery instance for chaining.
 	 */
-
 	css(property, value) {
 		if (typeof property !== 'string' || typeof value !== 'string') {
 			throw new Error('Property and value must be strings.')
@@ -57,7 +97,6 @@ class BSQuery {
  * @param {string|HTMLElement} selector - A CSS selector string or an HTMLElement.
  * @returns {BSQuery} A new BSQuery instance for the given selector.
  */
-
 export function $BS(selector) {
 	return new BSQuery(selector)
 }
