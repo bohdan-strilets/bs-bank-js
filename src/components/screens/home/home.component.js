@@ -1,4 +1,3 @@
-import { $BS } from '@/core/bsquery/bsquery.lib'
 import { BaseScreen } from '@/core/component/base-screen.component'
 import renderService from '@/core/services/render.service'
 
@@ -12,7 +11,6 @@ export class Home extends BaseScreen {
 
 	render() {
 		const element = renderService.htmlToElement(template, [], styles)
-		$BS(element).find('h1').css('color', 'blue')
 		return element
 	}
 }
