@@ -114,7 +114,7 @@ class BSQuery {
 	/**
 	 * Set an event listener for the submit event of a form element.
 	 * @param {function(Event): void} onSubmit - The event listener for the form's submit event.
-	 * @returns {RQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current RQuery instance for chaining.
 	 */
 	submit(onSubmit) {
 		if (this.element.tagName.toLowerCase() === 'form') {
@@ -133,7 +133,7 @@ class BSQuery {
 	 * @param {object} options - An object containing input options.
 	 * @param {function(Event): void} [options.onInput] - The event listener for the input's input event.
 	 * @param {object} [options.rest] - Optional attributes to set on the input element.
-	 * @returns {RQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current RQuery instance for chaining.
 	 */
 	input({ onInput, ...rest }) {
 		if (this.element.tagName.toLowerCase() !== 'input')
@@ -153,7 +153,7 @@ class BSQuery {
 	/**
 	 * Set attributes and event listeners for a number input element.
 	 * @param {number} [limit] - The maximum length of input value.
-	 * @returns {RQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current RQuery instance for chaining.
 	 */
 	numberInput(limit) {
 		if (
@@ -196,6 +196,24 @@ class BSQuery {
 	//STYLES
 
 	/**
+	 * Shows the selected element by removing the 'display' style property.
+	 * @returns {BSQuery} The current RQuery instance for chaining.
+	 */
+	show() {
+		this.element.style.removeProperty('display')
+		return this
+	}
+
+	/**
+	 * Hides the selected element by setting its display style to 'none'.
+	 * @returns {BSQuery} The current RQuery instance for chaining.
+	 */
+	hide() {
+		this.element.style.display = 'none'
+		return this
+	}
+
+	/**
 	 * Set the CSS style of the selected element.
 	 * @param {string} property - The CSS property to set.
 	 * @param {string} value - The value to set for the CSS property.
@@ -212,7 +230,7 @@ class BSQuery {
 	/**
 	 * Adds a class or a list of classes to the current element.
 	 * @param {string | string[]} classNames - A single class name or an array of class names to add to the element.
-	 * @returns {RQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current RQuery instance for chaining.
 	 */
 	addClass(classNames) {
 		if (Array.isArray(classNames)) {
@@ -229,7 +247,7 @@ class BSQuery {
 	/**
 	 * Removes a class or a list of classes from the current element.
 	 * @param {string | string[]} classNames - A single class name or an array of class names to remove from the element.
-	 * @returns {RQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current RQuery instance for chaining.
 	 */
 	removeClass(classNames) {
 		if (Array.isArray(classNames)) {
@@ -247,7 +265,7 @@ class BSQuery {
 	 * Set or get the value of an attribute on the selected element.
 	 * @param {string} attributeName - The name of the attribute to set or get.
 	 * @param {string} [value] - The value to set for the attribute. If not provided, the current value of the attribute will be returned.
-	 * @returns {RQuery|string} The current RQuery instance for chaining (if setting) or the attribute value (if getting).
+	 * @returns {BSQuery|string} The current RQuery instance for chaining (if setting) or the attribute value (if getting).
 	 */
 	attr(attributeName, value) {
 		if (typeof attributeName !== 'string') {
