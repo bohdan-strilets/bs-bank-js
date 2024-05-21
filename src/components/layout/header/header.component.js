@@ -18,6 +18,10 @@ export class Header extends ChildComponent {
 		this.store = Store.getInstance()
 		this.store.addObserver(this)
 		this.router = router
+		this.userItem = new UserItem({
+			avatarPath: 'path',
+			name: 'name'
+		})
 	}
 
 	update() {
@@ -26,6 +30,7 @@ export class Header extends ChildComponent {
 
 		if (this.user) {
 			authSideElement.show()
+			this.userItem.update(this.user)
 			this.router.navigate('/')
 		} else {
 			authSideElement.hide()
@@ -41,11 +46,7 @@ export class Header extends ChildComponent {
 					router: this.router
 				}),
 				Search,
-				new UserItem({
-					avatarPath:
-						'https://cdn.pixabay.com/photo/2023/02/08/18/36/tawny-owl-7777285_1280.jpg',
-					name: 'BS'
-				})
+				this.userItem
 			],
 			styles
 		)
