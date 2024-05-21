@@ -60,7 +60,7 @@ export class Router {
 
 		if (!this.#layout) {
 			this.#layout = new Layout({ router: this, children: component }).render()
-			$BS('#app').append(this.#layout)
+			$BS('#app').html('').append(this.#layout)
 		} else {
 			$BS('#content').html('').append(component)
 		}
