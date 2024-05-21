@@ -41,7 +41,7 @@ class BSQuery {
 	/**
 	 * Find all elements that match the specified selector within the selected element.
 	 * @param {string} selector - A CSS selector string to search for within the selected element.
-	 * @returns {BSQuery[]} An array of new RQuery instances for the found elements.
+	 * @returns {BSQuery[]} An array of new BSQuery instances for the found elements.
 	 */
 	findAll(selector) {
 		const elements = this.element.querySelectorAll(selector)
@@ -96,7 +96,7 @@ class BSQuery {
 	/**
 	 * Get or set the text content of the selected element.
 	 * @param {string} [textContent] - Optional text content to set. If not provided, the current text content will be returned.
-	 * @returns {RQuery|string} The current RQuery instance for chaining when setting text content, or the current text content when getting.
+	 * @returns {BSQuery|string} The current BSQuery instance for chaining when setting text content, or the current text content when getting.
 	 */
 	text(textContent) {
 		if (typeof textContent === 'undefined') {
@@ -113,7 +113,7 @@ class BSQuery {
 	 * Add an event listener to the selected element for the specified event type.
 	 * @param {string} eventType - The type of event to listen for (e.g., 'click', 'input', etc.).
 	 * @param {function(Event): void} callback - The event listener function to execute when the event is triggered. The function will receive the event object as its argument.
-	 * @returns {BSQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current BSQuery instance for chaining.
 	 */
 	on(eventType, callback) {
 		if (typeof eventType !== 'string' || typeof callback !== 'function') {
@@ -139,9 +139,23 @@ class BSQuery {
 	// FORM
 
 	/**
+	 * Gets or sets the value of an input element.
+	 * @param {string} [newValue] - The new value to set for the input element. If not provided, the method returns the current value.
+	 * @return {string|BSQuery} - If newValue is provided, returns the BSQuery instance. Otherwise, returns the current value of the input element.
+	 */
+	value(newValue) {
+		if (typeof newValue === 'undefined') {
+			return this.element.value
+		} else {
+			this.element.value = newValue
+			return this
+		}
+	}
+
+	/**
 	 * Set an event listener for the submit event of a form element.
 	 * @param {function(Event): void} onSubmit - The event listener for the form's submit event.
-	 * @returns {BSQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current BSQuery instance for chaining.
 	 */
 	submit(onSubmit) {
 		if (this.element.tagName.toLowerCase() === 'form') {
@@ -160,7 +174,7 @@ class BSQuery {
 	 * @param {object} options - An object containing input options.
 	 * @param {function(Event): void} [options.onInput] - The event listener for the input's input event.
 	 * @param {object} [options.rest] - Optional attributes to set on the input element.
-	 * @returns {BSQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current BSQuery instance for chaining.
 	 */
 	input({ onInput, ...rest }) {
 		if (this.element.tagName.toLowerCase() !== 'input')
@@ -180,7 +194,7 @@ class BSQuery {
 	/**
 	 * Set attributes and event listeners for a number input element.
 	 * @param {number} [limit] - The maximum length of input value.
-	 * @returns {BSQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current BSQuery instance for chaining.
 	 */
 	numberInput(limit) {
 		if (
@@ -200,7 +214,7 @@ class BSQuery {
 
 	/**
 	 * Set attributes and event listeners for a credit card input element.
-	 * @returns {RQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current BSQuery instance for chaining.
 	 */
 	creditCardInput() {
 		const limit = 16
@@ -224,7 +238,7 @@ class BSQuery {
 
 	/**
 	 * Shows the selected element by removing the 'display' style property.
-	 * @returns {BSQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current BSQuery instance for chaining.
 	 */
 	show() {
 		this.element.style.removeProperty('display')
@@ -233,7 +247,7 @@ class BSQuery {
 
 	/**
 	 * Hides the selected element by setting its display style to 'none'.
-	 * @returns {BSQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current BSQuery instance for chaining.
 	 */
 	hide() {
 		this.element.style.display = 'none'
@@ -257,7 +271,7 @@ class BSQuery {
 	/**
 	 * Adds a class or a list of classes to the current element.
 	 * @param {string | string[]} classNames - A single class name or an array of class names to add to the element.
-	 * @returns {BSQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current BSQuery instance for chaining.
 	 */
 	addClass(classNames) {
 		if (Array.isArray(classNames)) {
@@ -274,7 +288,7 @@ class BSQuery {
 	/**
 	 * Removes a class or a list of classes from the current element.
 	 * @param {string | string[]} classNames - A single class name or an array of class names to remove from the element.
-	 * @returns {BSQuery} The current RQuery instance for chaining.
+	 * @returns {BSQuery} The current BSQuery instance for chaining.
 	 */
 	removeClass(classNames) {
 		if (Array.isArray(classNames)) {
@@ -292,7 +306,7 @@ class BSQuery {
 	 * Set or get the value of an attribute on the selected element.
 	 * @param {string} attributeName - The name of the attribute to set or get.
 	 * @param {string} [value] - The value to set for the attribute. If not provided, the current value of the attribute will be returned.
-	 * @returns {BSQuery|string} The current RQuery instance for chaining (if setting) or the attribute value (if getting).
+	 * @returns {BSQuery|string} The current BSQuery instance for chaining (if setting) or the attribute value (if getting).
 	 */
 	attr(attributeName, value) {
 		if (typeof attributeName !== 'string') {
@@ -305,6 +319,20 @@ class BSQuery {
 			this.element.setAttribute(attributeName, value)
 			return this
 		}
+	}
+
+	/**
+	 * Removes an attribute from the current element.
+	 * @param {string} attrName - The name of the attribute to remove.
+	 * @return {BSQuery} - Returns the BSQuery instance.
+	 */
+	removeAttr(attrName) {
+		if (typeof attrName !== 'string') {
+			throw new Error('attrName must be a string')
+		}
+
+		this.element.removeAttribute(attrName)
+		return this
 	}
 }
 
