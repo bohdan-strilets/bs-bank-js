@@ -1,6 +1,10 @@
 import { SERVER_URL } from '@/config/url.config'
 
+import { NotificationService } from '../services/notification.service'
+import { StorageService } from '../services/storage.service'
+
 import { extractErrorMessage } from './extract-error-message'
+import { ACCESS_TOKEN_KEY } from '@/constants/auth.constants'
 
 /**
  * ServerQuery is a minimalistic library for handling API requests.
@@ -28,8 +32,7 @@ export async function serverQuery({
 		data = null
 	const url = `${SERVER_URL}/api${path}`
 
-	/* ACCESS_TOKEN from LS */
-	const accessToken = ''
+	const accessToken = new StorageService().getItem(ACCESS_TOKEN_KEY)
 
 	const requestOptions = {
 		method,
@@ -63,7 +66,7 @@ export async function serverQuery({
 				onError(errorMessage)
 			}
 
-			/* Notification error */
+			new NotificationService().show('error', errorMessage)
 		}
 	} catch (errorData) {
 		const errorMessage = extractErrorMessage(errorData)
