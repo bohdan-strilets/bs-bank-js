@@ -1,8 +1,6 @@
-import { $BS } from '@/core/bsquery/bsquery.lib'
 import ChildComponent from '@/core/component/child.component'
 import renderService from '@/core/services/render.service'
 
-import styles from './loader.module.scss'
 import template from './loader.template.html'
 
 export const LOADER_SELECTOR = '[data-component="loader"]'
@@ -16,13 +14,9 @@ export class Loader extends ChildComponent {
 	}
 
 	render() {
-		this.element = renderService.htmlToElement(template, [], styles)
-
-		$BS(this.element)
-			.css('width', `${this.width}px`)
-			.css('height', `${this.height}px`)
-			.addClass('bounce')
-
+		this.element = renderService.htmlToElement(template, [])
+		this.element.style = `width: ${this.width}px; height: ${this.height}px`
+		this.element.classList.add('bounce')
 		return this.element
 	}
 }
