@@ -46,9 +46,7 @@ This will start the Webpack Dev Server and open the application in your default 
 
 To build the application for production:
 
-    ```bash
     npm run build
-    ```
 
 This will generate the optimized output in the "dist" directory.
 
