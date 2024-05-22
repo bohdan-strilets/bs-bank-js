@@ -38,9 +38,7 @@ Ensure you have Node.js and npm installed on your machine.
 
 To start the application in development mode with hot reloading:
 
-    ```bash
     npm run dev
-    ```
 
 This will start the Webpack Dev Server and open the application in your default web browser.
 
